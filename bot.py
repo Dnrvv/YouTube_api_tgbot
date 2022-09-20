@@ -8,9 +8,13 @@ from aiogram.contrib.fsm_storage.redis import RedisStorage2
 from tgbot.config import load_config
 from tgbot.filters.admin import AdminFilter
 from tgbot.handlers.echo import register_echo
+from tgbot.handlers.users.process_bot_start import register_process_bot_start
+from tgbot.handlers.users.process_ytapi_test import register_process_ytapi_test
 from tgbot.middlewares.db import DbMiddleware
 from tgbot.middlewares.throttling import ThrottlingMiddleware
 from tgbot.services import set_bot_commands
+from tgbot.services.db_api import db_gino
+from tgbot.services.db_api.db_gino import db
 from tgbot.services.notifications import notify_admins
 
 logger = logging.getLogger(__name__)
@@ -26,7 +30,8 @@ def register_all_filters(dp):
 
 
 def register_all_handlers(dp):
-
+    register_process_bot_start(dp)
+    register_process_ytapi_test(dp)
 
     register_echo(dp)
 
@@ -42,6 +47,10 @@ async def main():
     storage = RedisStorage2() if config.tg_bot.use_redis else MemoryStorage()
     bot = Bot(token=config.tg_bot.token, parse_mode='HTML')
     dp = Dispatcher(bot, storage=storage)
+
+    await db_gino.on_startup(dp)
+    await db.gino.drop_all()
+    await db.gino.create_all()
 
     bot['config'] = config
 

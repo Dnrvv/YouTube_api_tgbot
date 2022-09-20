@@ -20,7 +20,8 @@ class TgBot:
 
 @dataclass
 class Miscellaneous:
-    other_params: str = None
+    client_id: str
+    client_secret: str
 
 
 @dataclass
@@ -46,5 +47,8 @@ def load_config(path: str = None):
             user=env.str('DB_USER'),
             database=env.str('DB_NAME')
         ),
-        misc=Miscellaneous()
+        misc=Miscellaneous(
+            client_id=env.str('CLIENT_ID'),
+            client_secret=env.str('CLIENT_SECRET')
+        )
     )

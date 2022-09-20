@@ -1,3 +1,13 @@
 aiogram~=2.18
 aioredis~=2.0
 environs~=9.0
+wikipedia==1.4.0
+requests==2.27.1
+bs4==0.0.1
+lxml==4.8.0
+jsonfield
+psycopg2-binary
+asyncpg~=0.25.0
+gino<1.4
+sqlalchemy
+asgiref
