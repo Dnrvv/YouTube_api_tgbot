@@ -10,7 +10,7 @@ from oauth2client.client import (
 )
 from oauth2client.file import Storage
 
-from tgbot.services.db_api import db_commands
+
 
 
 class AuthCodeInvalidError(Exception):
@@ -71,13 +71,8 @@ class GoogleAuth:
         storage = Storage(cred_file)
         self.credentials = storage.get()
 
-    # async def load_credentials_from_db(self, user_id: int):
-    #     credentials = await db_commands.get_user_auth_data(id=user_id)
+
 
     def SaveCredentialsFile(self, cred_file: str) -> None:
         storage = Storage(cred_file)
         storage.put(self.credentials)
-
-    # async def save_credentials_to_db(self, user_id: int, ):
-    #     auth_data = str(self.credentials)
-    #     await db_commands.save_user_auth_data(id=user_id, auth_data=auth_data)
