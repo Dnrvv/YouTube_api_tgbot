@@ -5,7 +5,6 @@ from aiogram.dispatcher import FSMContext
 
 
 from tgbot.config import load_config
-from tgbot.services.db_api import db_commands
 from tgbot.services.youtube.auth import GoogleAuth
 from tgbot.services.youtube.youtube import YouTube, like_video
 
@@ -29,8 +28,6 @@ async def authentication_yt(message: types.Message, state: FSMContext):
             auth = GoogleAuth(CLIENT_ID=config.misc.client_id, CLIENT_SECRET=config.misc.client_secret)
             auth.Auth(auth_key)
             auth.SaveCredentialsFile("creds.json")
-            await db_commands.update_user_auth_status(id=message.from_user.id, status="True")
-
             with open("creds.json", "r") as f:
                 cred_data = f.read()
 
