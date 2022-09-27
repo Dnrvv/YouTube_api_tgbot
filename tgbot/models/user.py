@@ -10,6 +10,6 @@ class User(BaseModel):
     name = Column(String(50))
 
     authenticated = Column(String(10), default="False")  # str: True/False
-    auth_key = Column(String(200), default="None")
+    auth_data = Column(String(3000), default="None")
 
     query: sql.Select

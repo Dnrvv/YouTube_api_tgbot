@@ -125,3 +125,10 @@ class YouTube:
 def print_response(response: dict) -> None:
     for key, value in response.items():
         print(key, " : ", value, "\n\n")
+
+
+def like_video(youtube, args):
+    youtube.videos().rate(
+        id=args.videoId,
+        rating=args.rating
+    ).execute()

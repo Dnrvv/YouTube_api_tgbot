@@ -11,7 +11,6 @@ from tgbot.handlers.echo import register_echo
 from tgbot.handlers.users.process_bot_start import register_process_bot_start
 from tgbot.handlers.users.process_ytapi_test import register_process_ytapi_test
 from tgbot.middlewares.db import DbMiddleware
-from tgbot.middlewares.throttling import ThrottlingMiddleware
 from tgbot.services import set_bot_commands
 from tgbot.services.db_api import db_gino
 from tgbot.services.db_api.db_gino import db
@@ -22,7 +21,6 @@ logger = logging.getLogger(__name__)
 
 def register_all_middlewares(dp):
     dp.setup_middleware(DbMiddleware())
-    dp.setup_middleware(ThrottlingMiddleware())
 
 
 def register_all_filters(dp):

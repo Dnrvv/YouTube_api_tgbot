@@ -6,9 +6,9 @@ from tgbot.services.db_api.db_gino import db
 from tgbot.models.user import User
 
 
-async def add_user(id: int, name: str, authenticated: str = "False", auth_key: str = "None"):
+async def add_user(id: int, name: str, authenticated: str = "False", auth_data: str = "None"):
     try:
-        user = User(id=id, name=name, authenticated=authenticated, auth_key=auth_key)
+        user = User(id=id, name=name, authenticated=authenticated, auth_data=auth_data)
         await user.create()
         return True
     except UniqueViolationError:
@@ -31,11 +31,16 @@ async def count_users():
     return total
 
 
-async def update_user_auth_status(id: int, status: str = "True"):
+async def update_user_auth_status(id: int, status: str = "False"):
     user = await User.query.where(User.id == id).gino.first()
     await user.update(authenticated=status).apply()
 
 
-async def save_user_auth_key(id: int, auth_key: str):
+async def save_user_auth_data(id: int, auth_data: str):
     user = await User.query.where(User.id == id).gino.first()
-    await user.update(auth_key=auth_key).apply()
+    await user.update(auth_data=auth_data).apply()
+
+
+async def get_user_auth_data(id: int):
+    user = await User.query.where(User.id == id).gino.first()
+    return user.auth_data
